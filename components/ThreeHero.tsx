@@ -4,6 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
 import { useRef } from 'react';
 import { Text } from '@react-three/drei';
+import { RootState } from '@react-three/fiber';
 
 // function FilmReel() {
 //   const meshRef = useRef();
@@ -33,14 +34,14 @@ function FilmReel() {
   // useFrame(() => {
   //   groupRef.current.rotation.z += 0.01;
   // });
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
+  useFrame((state: RootState) => {
+  const t = state.clock.getElapsedTime();
 
+  if (groupRef.current) {
     groupRef.current.rotation.z = t * 0.5;
-
-    // slight tilt for cinematic feel
     groupRef.current.rotation.x = Math.sin(t) * 0.2;
-  });
+  }
+});
 
   return (
     <group ref={groupRef}>
