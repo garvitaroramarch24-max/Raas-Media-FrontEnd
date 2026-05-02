@@ -99,7 +99,7 @@ function Lights() {
 }
 
 function Particles() {
-  const particles = new Array(80).fill();
+  const particles = new Array(80).fill(null);
 
   return particles.map((_, i) => (
     <mesh
