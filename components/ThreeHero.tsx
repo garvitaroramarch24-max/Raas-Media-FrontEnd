@@ -28,7 +28,7 @@ import { Text } from '@react-three/drei';
 //   );
 // }
 function FilmReel() {
-  const groupRef = useRef();
+  const groupRef = useRef<any>(null);
 
   // useFrame(() => {
   //   groupRef.current.rotation.z += 0.01;
