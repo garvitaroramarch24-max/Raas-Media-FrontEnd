@@ -117,11 +117,11 @@ export default function LoginPage() {
           </form>
 
           {/* Demo Credentials */}
-          <div className="mt-8 p-4 bg-gold/10 border border-gold/20 rounded-lg">
+          {/* <div className="mt-8 p-4 bg-gold/10 border border-gold/20 rounded-lg">
             <p className="text-gold text-sm font-semibold mb-2">Demo Credentials:</p>
             <p className="text-lightGray/70 text-xs">Username: admin</p>
             <p className="text-lightGray/70 text-xs">Password: admin123</p>
-          </div>
+          </div> */}
         </div>
       </motion.div>
     </div>
