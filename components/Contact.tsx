@@ -79,7 +79,7 @@ export default function Contact() {
           >
             <FiMail className="text-4xl text-gold mx-auto mb-4" />
             <h3 className="text-xl font-bold text-lightGray mb-2">Email</h3>
-            <p className="text-lightGray/70">sanjivchadha1973@gmail.com</p>
+            <p className="text-lightGray/70">raasme5@gmail.com</p>
           </motion.div>
 
           <motion.div
@@ -91,7 +91,7 @@ export default function Contact() {
           >
             <FiMapPin className="text-4xl text-gold mx-auto mb-4" />
             <h3 className="text-xl font-bold text-lightGray mb-2">Location</h3>
-            <p className="text-lightGray/70">Mumbai, India</p>
+            <p className="text-lightGray/70">Raas Media & Entertainment A/ 2303, JP Decks CHSL, Gen. A.K Vaidya Marg, Malad (East). Mumbai - 400 097</p>
           </motion.div>
         </div>
 
@@ -167,8 +167,15 @@ export default function Contact() {
             viewport={{ once: true }}
             className="h-96 rounded-lg overflow-hidden border border-gold/20"
           >
-            <iframe
+            {/* <iframe
               src="https://maps.google.com/maps?q=Goregaon%20West%20Mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+            /> */}
+            <iframe
+              src="https://maps.google.com/maps?q=Raas%20Media%20%26%20Entertainment%20A%2F2303%2C%20JP%20Decks%20CHSL%2C%20Gen.%20A.K%20Vaidya%20Marg%2C%20Malad%20East%2C%20Mumbai%20400097&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
