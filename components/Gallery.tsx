@@ -88,12 +88,13 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiImage } from 'react-icons/fi';
 import axios from 'axios';
 import { apiUrl } from '@/lib/api';
 
 interface GalleryItem {
   _id: string;
-  image: string;
+  image?: string;
   alt?: string;
 }
 
@@ -222,11 +223,17 @@ export default function Gallery() {
                 onClick={() => setLightbox(index)}
                 className={`relative rounded-xl overflow-hidden group cursor-pointer border border-gold/10 hover:border-gold/35 transition-colors duration-300 ${spanClass(index)}`}
               >
-                <img
-                  src={image.image}
-                  alt={image.alt || 'Gallery'}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                {image.image ? (
+                  <img
+                    src={image.image}
+                    alt={image.alt || 'Gallery'}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-darkGray to-darkest flex items-center justify-center">
+                    <FiImage className="text-4xl text-gold/20" aria-hidden />
+                  </div>
+                )}
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
                 {/* Zoom icon */}
@@ -268,11 +275,17 @@ export default function Gallery() {
               onClick={e => e.stopPropagation()}
             >
               <div className="relative rounded-xl overflow-hidden border border-gold/20 shadow-[0_40px_120px_rgba(0,0,0,0.8)]">
-                <img
-                  src={galleryImages[lightbox].image}
-                  alt={galleryImages[lightbox].alt || 'Gallery'}
-                  className="max-h-[80vh] max-w-full object-contain"
-                />
+                {galleryImages[lightbox].image ? (
+                  <img
+                    src={galleryImages[lightbox].image}
+                    alt={galleryImages[lightbox].alt || 'Gallery'}
+                    className="max-h-[80vh] max-w-full object-contain"
+                  />
+                ) : (
+                  <div className="min-h-[40vh] min-w-[50vw] max-w-full flex items-center justify-center bg-gradient-to-br from-darkGray to-darkest">
+                    <FiImage className="text-6xl text-gold/20" aria-hidden />
+                  </div>
+                )}
                 {/* Corner brackets */}
                 <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-gold/60" />
                 <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-gold/60" />

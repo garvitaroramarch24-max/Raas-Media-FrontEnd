@@ -3,11 +3,13 @@ export interface Project {
   title: string;
   description: string;
   category: string;
-  image: string;
+  /** Empty when no image was set */
+  image?: string;
 }
 
 export interface GalleryItem {
   _id: string;
-  image: string;
+  /** Empty when no image was set */
+  image?: string;
   alt?: string;
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX } from 'react-icons/fi';
+import { FiX, FiImage } from 'react-icons/fi';
 import type { Project } from '@/lib/types';
 
 interface ProjectModalProps {
@@ -38,11 +38,17 @@ export default function ProjectModal({ isOpen, project, onClose }: ProjectModalP
 
             {/* Image */}
             <div className="relative h-96 overflow-hidden">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover"
-              />
+              {project.image ? (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-darkGray to-darkest flex items-center justify-center">
+                  <FiImage className="text-7xl text-gold/25" aria-hidden />
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-b from-dark/0 to-dark/80" />
             </div>
 

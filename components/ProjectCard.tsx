@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FiEye } from 'react-icons/fi';
+import { FiEye, FiImage } from 'react-icons/fi';
 import { useState } from 'react';
 import ProjectModal from './ProjectModal';
 import type { Project } from '@/lib/types';
@@ -25,11 +25,17 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         onClick={() => setIsModalOpen(true)}
       >
         {/* Image */}
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-darkGray to-darkest flex items-center justify-center">
+            <FiImage className="text-6xl text-gold/25" aria-hidden />
+          </div>
+        )}
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-dark/0 via-dark/50 to-dark/90 group-hover:from-dark/20 group-hover:to-dark/80 transition-all duration-300" />

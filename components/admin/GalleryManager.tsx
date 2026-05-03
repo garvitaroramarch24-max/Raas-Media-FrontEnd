@@ -211,7 +211,7 @@ import { apiUrl } from '@/lib/api';
 
 interface GalleryItem {
   _id?: string;
-  image: string;
+  image?: string;
   alt?: string;
 }
 
@@ -290,7 +290,7 @@ export default function GalleryManager() {
         fd.append('image', imageFile);
         if (formData.alt) fd.append('alt', formData.alt);
         await axios.post(apiUrl('/api/gallery'), fd, {
-          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+          headers: { Authorization: `Bearer ${token}` },
         });
       } else {
         await axios.post(apiUrl('/api/gallery'), formData, {
@@ -394,11 +394,17 @@ export default function GalleryManager() {
               className="relative group bg-dark border border-gold/20 rounded-xl overflow-hidden"
             >
               <div className="aspect-[4/3] bg-darkGray">
-                <img
-                  src={item.image}
-                  alt={item.alt || 'Gallery image'}
-                  className="w-full h-full object-cover"
-                />
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.alt || 'Gallery image'}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-darkGray to-darkest">
+                    <FiImage className="text-3xl text-gold/20" aria-hidden />
+                  </div>
+                )}
               </div>
 
               {/* Overlay with delete — always visible on mobile, hover on desktop */}
@@ -540,7 +546,6 @@ export default function GalleryManager() {
                       name="image"
                       value={formData.image}
                       onChange={handleChange}
-                      required={imageMode === 'url'}
                       className="input-field"
                       placeholder="https://example.com/image.jpg"
                     />
@@ -566,7 +571,7 @@ export default function GalleryManager() {
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
                   <button
                     type="submit"
-                    disabled={isSaving || (imageMode === 'upload' && !imageFile)}
+                    disabled={isSaving}
                     className="flex-1 flex items-center justify-center gap-2 px-5 py-3 bg-gradient-gold text-dark font-bold rounded-lg hover:shadow-lg hover:shadow-gold/40 active:scale-95 transition-all disabled:opacity-50"
                   >
                     {isSaving ? (

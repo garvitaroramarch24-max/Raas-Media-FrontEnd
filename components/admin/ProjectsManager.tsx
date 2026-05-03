@@ -346,7 +346,7 @@ export default function ProjectsManager() {
         fd.append('category', formData.category);
         fd.append('image', imageFile);
         await axios.post(apiUrl('/api/projects'), fd, {
-          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+          headers: { Authorization: `Bearer ${token}` },
         });
       } else {
         // Send as JSON with image URL
@@ -661,7 +661,6 @@ export default function ProjectsManager() {
                       name="image"
                       value={formData.image}
                       onChange={handleChange}
-                      required={imageMode === 'url'}
                       className="input-field"
                       placeholder="https://example.com/image.jpg"
                     />
