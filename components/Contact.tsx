@@ -14,6 +14,7 @@ export default function Contact() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -23,9 +24,9 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    setSubmitError(null);
 
     try {
-      // This will be handled by backend
       const response = await axios.post(apiUrl('/api/contact'), formData);
       if (response.status === 200) {
         setSubmitted(true);
@@ -34,6 +35,18 @@ export default function Contact() {
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      if (axios.isAxiosError(error)) {
+        const data = error.response?.data as { message?: string } | undefined;
+        const msg =
+          typeof data?.message === 'string'
+            ? data.message
+            : error.response?.status === 0 || !error.response
+              ? 'Cannot reach the server. Check your connection and that the API URL is correct.'
+              : 'Could not send your message. Please try again or use the phone or email above.';
+        setSubmitError(msg);
+      } else {
+        setSubmitError('Something went wrong. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +120,13 @@ export default function Contact() {
           >
             {submitted && (
               <div className="p-4 bg-green-500/20 border border-green-500 text-green-400 rounded-lg">
-                Thank you! We'll get back to you soon.
+                Thank you! We&apos;ll get back to you soon.
+              </div>
+            )}
+
+            {submitError && (
+              <div className="p-4 bg-red-500/15 border border-red-500/50 text-red-300 rounded-lg text-sm">
+                {submitError}
               </div>
             )}
 

@@ -530,23 +530,26 @@ export default function ProjectsManager() {
               exit={{ opacity: 0, y: 60 }}
               transition={{ type: 'spring', damping: 28, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-dark w-full sm:max-w-lg sm:rounded-xl border-t border-gold/30 sm:border rounded-t-2xl overflow-hidden"
+              className="bg-dark w-full sm:max-w-lg sm:rounded-xl border-t border-gold/30 sm:border rounded-t-2xl overflow-hidden flex flex-col min-h-0 max-h-[min(92vh,900px)]"
             >
               {/* Drag handle (mobile only) */}
-              <div className="flex justify-center pt-3 pb-1 sm:hidden">
+              <div className="flex justify-center pt-3 pb-1 sm:hidden shrink-0">
                 <div className="w-10 h-1 rounded-full bg-gold/20" />
               </div>
 
               {/* Modal header */}
-              <div className="flex justify-between items-center px-5 py-4 border-b border-gold/20">
+              <div className="flex justify-between items-center px-5 py-4 border-b border-gold/20 shrink-0">
                 <h3 className="text-lg font-bold text-lightGray">Add New Project</h3>
                 <button type="button" onClick={handleCloseModal} className="p-1.5 text-lightGray/50 hover:text-gold transition-colors rounded-lg">
                   <FiX size={20} />
                 </button>
               </div>
 
-              {/* Form — scrollable if content overflows on small screens */}
-              <form onSubmit={handleSubmit} className="p-5 space-y-4 overflow-y-auto max-h-[75vh] sm:max-h-none">
+              {/* Form — scroll inside modal so actions stay reachable */}
+              <form
+                onSubmit={handleSubmit}
+                className="p-5 space-y-4 overflow-y-auto overscroll-contain flex-1 min-h-0"
+              >
                 <Field label="Title">
                   <input
                     type="text"

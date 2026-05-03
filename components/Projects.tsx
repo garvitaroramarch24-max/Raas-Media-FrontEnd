@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import ProjectCard from './ProjectCard';
@@ -12,6 +12,20 @@ export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+
+  const liveCount = useMemo(
+    () => projects.filter((p) => p.category === 'live').length,
+    [projects]
+  );
+  const upcomingCount = useMemo(
+    () => projects.filter((p) => p.category === 'upcoming').length,
+    [projects]
+  );
+
+  useEffect(() => {
+    if (activeCategory === 'live' && liveCount === 0) setActiveCategory('all');
+    else if (activeCategory === 'upcoming' && upcomingCount === 0) setActiveCategory('all');
+  }, [activeCategory, liveCount, upcomingCount]);
 
   useEffect(() => {
     let cancelled = false;
@@ -63,20 +77,39 @@ export default function Projects() {
           viewport={{ once: true }}
           className="flex justify-center gap-4 mb-12 flex-wrap"
         >
-          {['all', 'live', 'upcoming'].map((category) => (
-            <button
-              key={category}
-              type="button"
-              onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 capitalize ${
-                activeCategory === category
-                  ? 'bg-gradient-gold text-dark shadow-lg shadow-gold/50'
-                  : 'border-2 border-gold text-gold hover:bg-gold/10'
-              }`}
-            >
-              {category === 'all' ? 'All Projects' : category === 'live' ? 'Live Projects' : 'Upcoming'}
-            </button>
-          ))}
+          {(['all', 'live', 'upcoming'] as const).map((category) => {
+            const emptyLive = category === 'live' && liveCount === 0;
+            const emptyUpcoming = category === 'upcoming' && upcomingCount === 0;
+            const disabled = emptyLive || emptyUpcoming;
+            const label =
+              category === 'all' ? 'All Projects' : category === 'live' ? 'Live Projects' : 'Upcoming';
+            const title = emptyLive
+              ? 'No live projects yet'
+              : emptyUpcoming
+                ? 'No upcoming projects yet'
+                : undefined;
+
+            return (
+              <button
+                key={category}
+                type="button"
+                title={title}
+                disabled={disabled}
+                onClick={() => {
+                  if (!disabled) setActiveCategory(category);
+                }}
+                className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 capitalize ${
+                  disabled
+                    ? 'cursor-not-allowed border-2 border-gold/15 text-lightGray/35 bg-dark/40'
+                    : activeCategory === category
+                      ? 'bg-gradient-gold text-dark shadow-lg shadow-gold/50'
+                      : 'border-2 border-gold text-gold hover:bg-gold/10'
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
         </motion.div>
 
         {isLoading && (
